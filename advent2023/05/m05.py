@@ -45,7 +45,7 @@ class Almanac:
         self.maps = maps
 
 
-#lines = read_file("/Users/mc/Desktop/advent2023/05/input-small.txt")
+# lines = read_file("/Users/mc/Desktop/advent2023/05/input-small.txt")
 lines = read_file("/Users/mc/Desktop/advent2023/05/input.txt")
 lines = [string for string in lines if string != ""]
 
@@ -75,9 +75,8 @@ almanac = Almanac(seeds, almanacMaps)
 locations = []
 
 for seedRange in almanac.seeds:
-    for seed in range(seedRange[0], seedRange[0] + seedRange[1]):
-        if seed == 82:
-            print("stop")
+    r = range(seedRange[0], seedRange[0] + seedRange[1])
+    for seed in r:
         hasNextMap = True
         i = 0
         source = seed
