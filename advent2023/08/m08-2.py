@@ -1,5 +1,5 @@
 from functools import reduce
-
+from math import gcd
 
 def read_file(file_path):
     try:
@@ -44,16 +44,26 @@ for l in lines:
 
 nodesMap = {node.key: node for node in nodes}
 
-steps = 0
+stepsCounts = []
 
 stepNodes = list(filter(lambda x: x.key.endswith("A"), nodes))
 
-end = False
-while not end:
-    nextStep = walkPattern[steps % len(walkPattern)]
-    stepNodes = list(map(lambda x: nodesMap[x.left] if nextStep == "L" else nodesMap[x.right], stepNodes))
-    steps += 1
-    end = all(x.key.endswith("Z") for x in stepNodes)
-    print(steps)
+i = 0
+for node in stepNodes:
+    steps = 0
+    end = False
+    nextNode = node
+    while not end:
+        nextStep = walkPattern[steps % len(walkPattern)]
+        nextNode = nodesMap[nextNode.left] if nextStep == "L" else nodesMap[nextNode.right]
+        steps += 1
+        if nextNode.key.endswith("Z"):
+            stepsCounts.append(steps)
+            end = True
+    i += 1
 
-print(steps)
+stepsCount = stepsCounts.pop()
+for steps in stepsCounts:
+    stepsCount = stepsCount * steps // gcd(stepsCount, steps)
+
+print(stepsCount)
